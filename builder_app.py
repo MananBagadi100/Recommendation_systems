@@ -169,23 +169,6 @@ print(user_item_matrix)
 #This contains only the rows which are rated so that we can train our KNNBasic model on it 
 df_given_ratings=df.dropna(subset=['reviews.rating'])
 
-'''
-#SVD as cosine similarity cannot take NaN values
-#Fill NaN values with 0 approach should be avoided as it can skew data
-#splitting the data into training and testing sets
-'''
-
-
-'''
-#applying the SVD
-svd=SVD()
-svd.fit(train_set)
-#making predictions on the test set
-prediction_svd=svd.test(test_set)
-#measuring the accuracy of predictiions
-accuracy.rmse(prediction_svd)
-'''
-
 
 #now we are using another method KNNBasic to predict the missing values
 sim_options={
@@ -227,76 +210,10 @@ for user_id in user_item_matrix_knnb.index:
             user_item_matrix_knnb.loc[user_id,product_id]=answer_knnb.est
 
 
-'''
-#now we will fill the missing values using the trained SVD
-for user_id in user_item_matrix.index:
-    for product_id in user_item_matrix.columns:
-        if pd.isna(user_item_matrix.loc[user_id,product_id]):
-            answer=svd.predict(user_id,product_id)
-            user_item_matrix.loc[user_id,product_id]=answer.est
-'''
-
-#print(user_item_matrix.head())
-
 print(user_item_matrix_knnb)
-
-'''
-#Created based on SVD
-#now creating the cosine similarity matrix for collaborative filtering
-#it is item based as we are recommending products or items 
-cosine_item_similarity_svd = cosine_similarity(user_item_matrix.T)
-print(cosine_item_similarity_svd)
-'''
 
 cosine_item_similarity_knnb=cosine_similarity(user_item_matrix_knnb.T)
 print(cosine_item_similarity_knnb)
-
-'''
-print(type(cosine_item_similarity_svd))
-df_filtered.duplicated().sum()
-'''
-
-'''
-def get_collab_recommendation(product_id, cosine_item_similarity,user_item_matrix,top_r):
-    recommendations={}
-    #checking if the product id exists or not5
-    if product_id not in user_item_matrix.columns:
-        recommendations['1']=('Product {product_id} not found')
-    else:
-        #find out the product index 
-        #we are finding 5this as numpy array can only be accessed by index positions
-        product_index=user_item_matrix.columns.get_loc(product_id)
-        #getting the similarity scores 
-        product_similarity=cosine_item_similarity[product_index]
-        #sorting in descending order
-        product_similarity_sorted=np.argsort(product_similarity)[::-1]
-        #removing the product itself and keeping the recommended products
-        product_similarity_sorted=product_similarity_sorted[1:top_r+1]
-        #map the indices with the product id
-    for i in product_similarity_sorted:
-        product_id_similar=user_item_matrix.columns[i]
-        similarity_score=product_similarity[i]
-        recommendations[product_id_similar]=similarity_score
-    return recommendations
-    '''
-
-'''
-#we are putting the product id label directly here
-#if label not correct , it will give error
-top_r=5
-b=int(input('Enter the Product ID for SVD approach'))
-recommedations=get_collab_recommendation(b,cosine_item_similarity_svd,user_item_matrix,top_r)
-for k,v in recommedations.items():
-    print(f'{k} : {v}')
-'''
-
-'''
-top_r=5
-c=int(input('Enter the product ID for KNN Basic approach'))
-recommedations_knnb=get_collab_recommendation(c,cosine_item_similarity_knnb,user_item_matrix_knnb,top_r)
-for k,v in recommedations_knnb.items():
-    print(f'{k} : {v}')
-    '''
 
 #here what we are basically doing is if a user has given rating on some
 #product we recommend similar products to him based on the similarity of 
