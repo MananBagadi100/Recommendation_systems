@@ -1,76 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Product Recommendation System</title>
-  <style>
-    body {
-      background-color: #f5f7fa;
-      color: #1e1e1e;
-      font-family: 'Helvetica Neue', sans-serif;
-      margin: 40px;
-    }
-
-    input[type="text"] {
-      padding: 10px;
-      width: 320px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-right: 10px;
-    }
-
-    input[type="submit"] {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    input[type="submit"]:hover {
-      background-color: #0056b3;
-    }
-
-    h1 {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-
-    h2 {
-      margin-top: 30px;
-      font-size: 22px;
-    }
-
-    ul {
-      margin-top: 20px;
-      list-style-type: disc;
-    }
-
-    li {
-      margin-bottom: 10px;
-    }
-
-    label {
-      font-weight: bold;
-    }
-  </style>
+ <title>Product Recommendation System</title>
+ <style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0b0c10;
+    color: #c5c6c7;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 700px;
+    margin: 60px auto;
+    background-color: #1f2833;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid #45a29e;
+}
+h1 {
+    text-align: center;
+    color: #66fcf1;
+    /* Removed the text-shadow property */
+}
+label {
+    display: block;
+    margin-top: 20px;
+    font-weight: 600;
+    color: #66fcf1;
+}
+input[type="text"] {
+    width: 100%;
+    padding: 12px 16px;
+    margin-top: 8px;
+    border: 1px solid #45a29e;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #0b0c10;
+    color: #c5c6c7;
+}
+input[type="submit"] {
+    margin-top: 20px;
+    padding: 12px 24px;
+    background-color: #45a29e;
+    color: #0b0c10;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+input[type="submit"]:hover {
+    background-color: #66fcf1;
+    box-shadow: 0 0 15px rgba(102, 252, 241, 0.7);
+}
+h2 {
+    margin-top: 40px;
+    font-size: 24px;
+    color: #66fcf1;
+}
+ul {
+    margin-top: 20px;
+    padding-left: 20px;
+}
+li {
+    margin-bottom: 10px;
+    font-size: 17px;
+    color: #c5c6c7;
+}
+li strong {
+    color: #66fcf1;
+}
+</style>
 </head>
 <body>
-  <h1>Product Recommendation System</h1>
-
-  <form method="POST">
-    <label>Enter Product ID:</label><br><br>
-    <input type="text" name="product_id" placeholder="e.g. B0013JQ6UY" required>
-    <input type="submit" value="Get Recommendations">
-  </form>
-
-  {% if recommendations %}
-    <h2>Top Recommendations:</h2>
-    <ul>
-      {% for pid, score in recommendations.items() %}
-        <li><strong>{{ pid }}</strong> – Similarity: {{ score | float | round(4) }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+ <div class="container">
+ <h1>Product Recommendation System</h1>
+ <form method="POST">
+ <label for="product_id">Enter Product ID:</label>
+ <input type="text" name="product_id" placeholder="e.g. B0013JQ6UY" required>
+ <input type="submit" value="Get Recommendations">
+ </form>
+ {% if recommendations %}
+ <h2>Top Recommendations:</h2>
+ <ul>
+ {% for pid, score in recommendations.items() %}
+ <li><strong>{{ pid }}</strong> – Similarity: {{ score | float | round(4) }}</li>
+ {% endfor %}
+ </ul>
+ {% endif %}
+ </div>
 </body>
 </html>
