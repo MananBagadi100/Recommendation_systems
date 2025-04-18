@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Recommendation System</title>
+  <style>
+    body {
+      background-color: #f5f7fa;
+      color: #1e1e1e;
+      font-family: 'Helvetica Neue', sans-serif;
+      margin: 40px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 320px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      font-size: 22px;
+    }
+
+    ul {
+      margin-top: 20px;
+      list-style-type: disc;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Product Recommendation System</h1>
+
+  <form method="POST">
+    <label>Enter Product ID:</label><br><br>
+    <input type="text" name="product_id" placeholder="e.g. B0013JQ6UY" required>
+    <input type="submit" value="Get Recommendations">
+  </form>
+
+  {% if recommendations %}
+    <h2>Top Recommendations:</h2>
+    <ul>
+      {% for pid, score in recommendations.items() %}
+        <li><strong>{{ pid }}</strong> – Similarity: {{ score | float | round(4) }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</body>
+</html>
